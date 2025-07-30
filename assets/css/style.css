@@ -1,0 +1,613 @@
+/**
+ * =================================================================
+ * Stylesheet Utama (style.css)
+ * =================================================================
+ * @version   : 2.0 (Versi Lengkap & Final)
+ * @author    : Gemini
+ * @description: Mengatur seluruh tampilan visual website SKBMD.
+ */
+
+/* 1. Reset & Variabel Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.7;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 2. Mode Terang & Gelap (Theme Colors) */
+:root {
+    --primary-color: #3a5a83;
+    --secondary-color: #5a8ee0;
+    --accent-color: #d69e2e;
+    --bg-color: #f8f9fa;
+    --surface-color: #ffffff;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode {
+    --primary-color: #79b2f4;
+    --secondary-color: #a3c9f7;
+    --accent-color: #f6e05e;
+    --bg-color: #171923;
+    --surface-color: #2d3748;
+    --text-primary: #f7fafc;
+    --text-secondary: #a0aec0;
+    --border-color: #4a5568;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 3. Helper & Utility Classes */
+.text-center { text-align: center; }
+.text-primary { color: var(--primary-color); }
+.text-accent { color: var(--accent-color); }
+.font-weight-bold { font-weight: 700; }
+.d-none { display: none; }
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+
+/* 4. Struktur & Layout Utama */
+.main-content {
+    padding: 30px 0;
+    min-height: calc(100vh - 280px);
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* 5. Header & Navigasi */
+.main-header {
+    background-color: var(--surface-color);
+    box-shadow: var(--shadow-sm);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 50px;
+    width: 50px;
+    object-fit: contain;
+}
+
+.site-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+.header-center .date-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--bg-color);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+}
+.theme-toggle-btn .fa-sun { display: none; }
+body.dark-mode .theme-toggle-btn .fa-moon { display: none; }
+body.dark-mode .theme-toggle-btn .fa-sun { display: block; }
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-image: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: none;
+    background-size: 200% auto;
+}
+.login-btn:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.mobile-menu-btn { display: none; }
+
+.main-nav {
+    background-color: var(--primary-color);
+}
+
+.main-nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.main-nav a {
+    display: flex; /* Menggunakan flexbox untuk alignment */
+    align-items: center;
+    justify-content: center; /* Menengahkan konten */
+    gap: 10px; /* Jarak antara ikon dan teks */
+    color: rgba(255, 255, 255, 0.8);
+    padding: 15px 25px;
+    font-weight: 600;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 4px;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+    border-radius: 2px;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: white;
+}
+
+.main-nav a:hover::after, .main-nav a.active::after {
+    width: 60%;
+}
+
+.mobile-only-link {
+    display: none;
+}
+
+/* Wadah untuk item menu yang memiliki dropdown */
+.nav-item-dropdown {
+    position: relative;
+}
+
+/* Menu dropdown itu sendiri, disembunyikan secara default */
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 10px); /* Memberi sedikit jarak dari menu utama */
+    left: 50%;
+    /* PERUBAHAN: Warna latar belakang diubah menjadi biru tema */
+    background-color: var(--primary-color); 
+    border-radius: 8px; /* Border radius disesuaikan */
+    box-shadow: var(--shadow-md);
+    list-style: none;
+    padding: 10px 0;
+    margin: 0;
+    min-width: 220px;
+    border: 1px solid var(--border-color);
+    z-index: 1000;
+
+    /* Kunci perbaikan: disembunyikan secara default */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Tampilkan menu dropdown saat item menu utama di-hover */
+.nav-item-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Styling untuk link di dalam dropdown */
+.dropdown-menu li a {
+    /* PERUBAHAN: Warna teks diubah menjadi putih agar terbaca */
+    color: white; 
+    padding: 12px 20px;
+    display: block;
+    white-space: nowrap;
+    justify-content: flex-start; /* Ratakan kiri */
+}
+
+.dropdown-menu li a:hover {
+    color: white; /* Pastikan teks tetap putih */
+}
+.dropdown-menu-mobile {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0 40px; /* Memberi indentasi pada submenu */
+    max-height: 0; /* Sembunyikan submenu secara default */
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.nav-item-dropdown-mobile.active .dropdown-menu-mobile {
+    max-height: 200px; /* Tampilkan submenu saat parent memiliki kelas .active */
+}
+
+.dropdown-toggle-mobile {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Pastikan memenuhi lebar */
+}
+.menu-item-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1; /* Biarkan grup ikon-teks tumbuh mengisi ruang */
+}
+.arrow-mobile {
+    transition: transform 0.3s ease;
+}
+
+.nav-item-dropdown-mobile.active .arrow-mobile {
+    transform: rotate(180deg); /* Putar panah saat menu terbuka */
+}
+/* Styling untuk ikon panah ke bawah */
+.dropdown-toggle i.fa-chevron-down {
+    font-size: 0.7em;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+}
+
+/* Putar ikon panah saat menu di-hover */
+.nav-item-dropdown:hover .dropdown-toggle i.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* 6. Konten Utama (Cards, Tables, Forms) */
+.card {
+    background-color: var(--surface-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.card-header {
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    color: var(--text-primary);
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+thead th {
+    background-color: var(--bg-color);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-secondary);
+}
+
+tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+tbody tr:hover {
+    background-color: var(--bg-color);
+}
+
+/* 7. Komponen Spesifik (Slider, Charts, Buttons) */
+.btn {
+    display: inline-block;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-accent {
+    background-color: var(--accent-color);
+    color: #212121;
+}
+.btn-accent:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.swiper-container {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 8. Footer */
+.main-footer {
+    background-color: #2d3748;
+    color: #e2e8f0;
+    padding: 40px 0 20px 0;
+    margin-top: 40px;
+}
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.footer-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+.footer-section a {
+    color: #e2e8f0;
+}
+.footer-section a:hover {
+    color: white;
+    padding-left: 5px;
+}
+.footer-section .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #4a5568;
+    font-size: 0.9rem;
+    color: #a0aec0;
+}
+
+/* 9. Animasi & Transisi */
+.main-content {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.card, .table-container {
+    animation: slideUp 0.7s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 10. Desain Responsif (Media Queries) */
+@media (max-width: 992px) {
+    .header-center {
+        display: none;
+    }
+    .main-nav ul {
+        justify-content: space-around;
+    }
+    .main-nav a {
+        padding: 15px 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        position: relative;
+    }
+    .site-title {
+        font-size: 1.2rem;
+    }
+    .login-btn {
+        display: none;
+    }
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        cursor: pointer;
+        z-index: 1001;
+    }
+    
+    .main-nav {
+        display: none;
+    }
+
+    .mobile-nav {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 400px;
+        background-color: var(--surface-color);
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 10px 0;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        transform: translateX(-50%) translateY(-20px);
+    }
+
+    .overlay.active .mobile-nav {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .mobile-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .mobile-nav a {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 25px;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+    .mobile-nav a:hover {
+        background-color: var(--bg-color);
+    }
+    .mobile-nav a i {
+        width: 25px;
+        text-align: center;
+        color: var(--text-secondary);
+    }
+    .mobile-only-link {
+        border-top: 1px solid var(--border-color);
+    }
+}
