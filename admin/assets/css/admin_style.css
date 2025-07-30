@@ -1,0 +1,760 @@
+/**
+ * =================================================================
+ * Stylesheet Panel Admin (admin_style.css)
+ * =================================================================
+ * @version   : 1.0
+ * @author    : Gemini
+ * @description: Mengatur seluruh tampilan visual panel admin.
+ *
+ * Daftar Isi:
+ * 1.  Variabel & Reset Dasar
+ * 2.  Mode Terang & Gelap
+ * 3.  Struktur Layout Utama (Wrapper, Sidebar, Konten)
+ * 4.  Sidebar Styling
+ * 5.  Header Admin (Top Bar)
+ * 6.  Konten Utama Halaman Admin
+ * 7.  Komponen Umum (Kartu, Form, Tabel, Tombol)
+ * 8.  Desain Responsif
+ * =================================================================
+ */
+
+/* 1. Variabel & Reset Dasar */
+:root {
+    --admin-primary: #2c3e50;
+    /* Biru Gelap Keabuan */
+    --admin-secondary: #34495e;
+    --admin-accent: #3498db;
+    /* Biru Cerah */
+    --admin-text-light: #ecf0f1;
+    --admin-text-dark: #2c3e50;
+    --admin-bg-light: #ecf0f1;
+    --admin-surface-light: #ffffff;
+    --admin-border-light: #dfe4ea;
+
+    --admin-bg-dark: #222b34;
+    --admin-surface-dark: #2c3642;
+    --admin-border-dark: #3b4654;
+
+    --sidebar-width: 260px;
+    --sidebar-width-collapsed: 80px;
+    --header-height: 70px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--admin-bg-light);
+    color: var(--admin-text-dark);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* 2. Mode Terang & Gelap */
+body.dark-mode {
+    background-color: var(--admin-bg-dark);
+    color: var(--admin-text-light);
+}
+
+/* 3. Struktur Layout Utama */
+.admin-wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-content-admin {
+    flex-grow: 1;
+    width: calc(100% - var(--sidebar-width));
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition-speed) ease;
+}
+
+body.sidebar-collapsed .main-content-admin {
+    margin-left: var(--sidebar-width-collapsed);
+    width: calc(100% - var(--sidebar-width-collapsed));
+}
+
+/* 4. Sidebar Styling */
+.admin-sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--admin-primary);
+    color: var(--admin-text-light);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 1010;
+    display: flex;
+    flex-direction: column;
+    transition: width var(--transition-speed) ease;
+}
+
+body.dark-mode .admin-sidebar {
+    background-color: #1f2937;
+    /* Sedikit lebih gelap dari primary */
+}
+
+.sidebar-header {
+    padding: 20px;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(236, 240, 241, 0.1);
+}
+
+.sidebar-logo-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.sidebar-logo {
+    height: 40px;
+    width: 40px;
+    flex-shrink: 0;
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+}
+
+.sidebar-nav {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px 0;
+}
+
+.sidebar-nav ul {
+    padding: 0 15px;
+}
+
+.sidebar-nav .nav-category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #95a5a6;
+    padding: 15px 10px 5px;
+    white-space: nowrap;
+}
+
+.sidebar-nav a {
+    display: flex;
+    align-items: center;
+    padding: 12px 10px;
+    color: var(--admin-text-light);
+    border-radius: 6px;
+    margin-bottom: 5px;
+    transition: background-color var(--transition-speed) ease;
+    white-space: nowrap;
+}
+
+.sidebar-nav a i {
+    font-size: 1.1rem;
+    width: 25px;
+    margin-right: 15px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.sidebar-nav a:hover {
+    background-color: var(--admin-secondary);
+}
+
+.sidebar-nav a.active {
+    background-color: var(--admin-accent);
+    color: white;
+    font-weight: 600;
+}
+
+/* Collapsed Sidebar Styles */
+body.sidebar-collapsed .admin-sidebar {
+    width: var(--sidebar-width-collapsed);
+}
+
+body.sidebar-collapsed .sidebar-title,
+body.sidebar-collapsed .sidebar-nav span,
+body.sidebar-collapsed .nav-category {
+    opacity: 0;
+    visibility: hidden;
+    width: 0;
+}
+
+body.sidebar-collapsed .sidebar-logo-link {
+    justify-content: center;
+}
+
+body.sidebar-collapsed .sidebar-nav a i {
+    margin-right: 0;
+}
+
+/* 5. Header Admin (Top Bar) */
+.admin-header {
+    height: var(--header-height);
+    background-color: var(--admin-surface-light);
+    border-bottom: 1px solid var(--admin-border-light);
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1005;
+    transition: background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+body.dark-mode .admin-header {
+    background-color: var(--admin-surface-dark);
+    border-bottom-color: var(--admin-border-dark);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.sidebar-toggle-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--admin-text-dark);
+}
+
+body.dark-mode .sidebar-toggle-btn {
+    color: var(--admin-text-light);
+}
+
+.page-title-admin {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.theme-toggle-btn-admin {
+    background: none;
+    border: 1px solid var(--admin-border-light);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #616161;
+}
+
+body.dark-mode .theme-toggle-btn-admin {
+    border-color: var(--admin-border-dark);
+    color: var(--admin-text-light);
+}
+
+.theme-toggle-btn-admin .fa-sun {
+    display: none;
+}
+
+body.dark-mode .theme-toggle-btn-admin .fa-moon {
+    display: none;
+}
+
+body.dark-mode .theme-toggle-btn-admin .fa-sun {
+    display: block;
+}
+
+.admin-profile-dropdown {
+    position: relative;
+}
+
+.profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    color: var(--admin-text-dark);
+}
+
+body.dark-mode .profile-btn {
+    color: var(--admin-text-light);
+}
+
+.profile-btn i.fa-user-circle {
+    font-size: 1.8rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 130%;
+    background-color: var(--admin-surface-light);
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+body.dark-mode .dropdown-content {
+    background-color: var(--admin-surface-dark);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-content a {
+    color: var(--admin-text-dark);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s ease;
+}
+
+body.dark-mode .dropdown-content a {
+    color: var(--admin-text-light);
+}
+
+.dropdown-content a:hover {
+    background-color: var(--admin-bg-light);
+}
+
+body.dark-mode .dropdown-content a:hover {
+    background-color: var(--admin-secondary);
+}
+
+.admin-profile-dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* 6. Konten Utama Halaman Admin */
+.admin-page-content {
+    padding: 25px;
+}
+
+/* 7. Komponen Umum (Kartu, Form, Tabel, Tombol) */
+.card-admin {
+    background-color: var(--admin-surface-light);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid var(--admin-border-light);
+}
+
+body.dark-mode .card-admin {
+    background-color: var(--admin-surface-dark);
+    border-color: var(--admin-border-dark);
+}
+
+.card-header-admin {
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--admin-border-light);
+}
+
+body.dark-mode .card-header-admin {
+    border-bottom-color: var(--admin-border-dark);
+}
+
+.card-title-admin {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+/* 8. Desain Responsif */
+@media (max-width: 768px) {
+    .main-content-admin {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .admin-sidebar {
+        left: calc(-1 * var(--sidebar-width));
+        transition: left var(--transition-speed) ease;
+    }
+
+    body.sidebar-open .admin-sidebar {
+        left: 0;
+    }
+
+    .page-title-admin {
+        display: none;
+    }
+}
+
+/* Styling untuk Halaman Manajemen Data */
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.search-form {
+    display: flex;
+}
+
+.search-form input {
+    padding: 10px 15px;
+    border: 1px solid var(--admin-border-light);
+    border-radius: 6px 0 0 6px;
+    min-width: 250px;
+    background-color: var(--admin-surface-light);
+    color: var(--admin-text-dark);
+}
+
+body.dark-mode .search-form input {
+    background-color: var(--admin-surface-dark);
+    color: var(--admin-text-light);
+    border-color: var(--admin-border-dark);
+}
+
+.search-form button {
+    padding: 10px 15px;
+    border: 1px solid var(--admin-accent);
+    background-color: var(--admin-accent);
+    color: white;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    margin-left: -1px;
+    /* Fix border overlap */
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 15px;
+    border-bottom: 1px solid var(--admin-border-light);
+    text-align: left;
+    vertical-align: middle;
+}
+
+body.dark-mode .table th,
+body.dark-mode .table td {
+    border-bottom-color: var(--admin-border-dark);
+}
+
+.table thead {
+    background-color: var(--admin-bg-light);
+}
+
+body.dark-mode .table thead {
+    background-color: var(--admin-bg-dark);
+}
+
+.table.table-hover tbody tr:hover {
+    background-color: var(--admin-bg-light);
+}
+
+body.dark-mode .table.table-hover tbody tr:hover {
+    background-color: var(--admin-bg-dark);
+}
+
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-view {
+    background-color: #2980b9;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+}
+
+.btn-delete {
+    background-color: #c0392b;
+}
+
+.pagination-nav {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-nav ul {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination-nav a {
+    padding: 8px 15px;
+    margin: 0 3px;
+    border: 1px solid var(--admin-border-light);
+    color: var(--admin-accent);
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.pagination-nav a:hover {
+    background-color: var(--admin-accent);
+    color: white;
+    border-color: var(--admin-accent);
+}
+
+.pagination-nav a.active {
+    background-color: var(--admin-accent);
+    color: white;
+    border-color: var(--admin-accent);
+}
+
+/* Sel yang berisi tombol-tombol aksi */
+.action-cell {
+    display: flex;
+    justify-content: flex-end;
+    /* Sejajarkan tombol ke kanan */
+    align-items: center;
+    gap: 8px;
+    /* Memberi jarak antar tombol */
+    white-space: nowrap;
+    /* Mencegah tombol turun baris di layar sempit */
+}
+
+/* Tombol aksi itu sendiri */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.btn-action:hover {
+    opacity: 0.85;
+}
+
+.btn-view {
+    background-color: #2980b9;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+}
+
+.btn-delete {
+    background-color: #c0392b;
+}
+
+.btn-save-changes {
+    background-image: linear-gradient(to right, var(--admin-accent), #279e9a);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-size: 200% auto;
+}
+
+.btn-save-changes:hover {
+    background-position: right center;
+    box-shadow: 0 4px 15px rgba(56, 178, 172, 0.4);
+}
+
+/* Overlay Konfirmasi */
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    /* Diubah menjadi flex oleh JS */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.confirm-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Modal Konfirmasi */
+.confirm-modal {
+    background-color: var(--admin-surface-light);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.confirm-overlay.active .confirm-modal {
+    transform: scale(1);
+}
+
+body.dark-mode .confirm-modal {
+    background-color: var(--admin-surface-dark);
+}
+
+.confirm-modal .confirm-icon {
+    font-size: 3rem;
+    color: #f39c12;
+    /* Warna kuning untuk peringatan */
+    margin-bottom: 15px;
+}
+
+.confirm-modal h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--admin-text-dark);
+}
+
+body.dark-mode .confirm-modal h3 {
+    color: var(--admin-text-light);
+}
+
+.confirm-modal p {
+    color: var(--admin-text-dark);
+    opacity: 0.8;
+    margin-bottom: 25px;
+}
+
+body.dark-mode .confirm-modal p {
+    color: var(--admin-text-light);
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.confirm-actions .btn-danger {
+    background-color: #c0392b;
+}
+
+.dropdown-toggle-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.arrow-admin {
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+}
+
+.nav-item-dropdown-admin.active>.dropdown-toggle-admin .arrow-admin {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu-admin {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 5px 25px;
+    /* Memberi indentasi */
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}
+
+.nav-item-dropdown-admin.active>.dropdown-menu-admin {
+    max-height: 200px;
+    /* Tinggi cukup untuk beberapa item */
+}
+
+.dropdown-menu-admin li a {
+    padding-left: 20px;
+    /* Padding lebih dalam untuk item submenu */
+    font-size: 0.9rem;
+}
+
+.dropdown-menu-admin li a:before {
+    content: "\f10c";
+    /* Ikon lingkaran kecil dari Font Awesome */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-right: 15px;
+    font-size: 0.6em;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
